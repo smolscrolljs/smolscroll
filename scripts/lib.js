@@ -2,6 +2,7 @@ const { spawnSync } = require("child_process");
 const path = require("path");
 const fs = require("fs-extra");
 const pkg = require("../package.json");
+const gzipSize = require("gzip-size");
 
 exports.upperFirst = (str) => str.charAt(0).toUpperCase() + str.slice(1);
 exports.exists = fs.exists;
@@ -86,4 +87,17 @@ export default DefaultProxy;\n`;
 
   const proxyPath = resolve(distPath, "main.d.ts");
   await writeFile(proxyPath, proxySrc);
+};
+
+exports.fileSize = (file) => {
+  const fmt = (size) => (size / 1024).toFixed(2);
+
+  const _fs = fmt(fs.statSync(file).size);
+  const gzip = fmt(gzipSize.fileSync(file));
+
+  return {
+    fs: _fs,
+    gzip,
+    label: `${_fs}kB (${gzip} gzipped)`,
+  };
 };

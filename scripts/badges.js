@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 const fs = require("fs");
-const { assetsDir } = require("./lib");
+const { assetsDir, fileSize, pkgDir } = require("./lib");
 const { badgen } = require("badgen");
 
 const pkg = require("./../package");
@@ -27,6 +27,30 @@ fs.writeFileSync(
   badgen({
     label: "npm",
     status: pkg.version,
+  })
+);
+
+fs.writeFileSync(
+  assetsDir("badge.core.size.svg"),
+  badgen({
+    label: "size core",
+    status: fileSize(pkgDir("dist/main.js")).label,
+  })
+);
+
+fs.writeFileSync(
+  assetsDir("badge.react.size.svg"),
+  badgen({
+    label: "size react",
+    status: fileSize(pkgDir("react/dist/main.js")).label,
+  })
+);
+
+fs.writeFileSync(
+  assetsDir("badge.time.size.svg"),
+  badgen({
+    label: "size time",
+    status: fileSize(pkgDir("time/dist/main.js")).label,
   })
 );
 
