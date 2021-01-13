@@ -52,7 +52,7 @@ export const debounce = function (fn, timeout) {
   };
 };
 
-const processExists = typeof process != "undefined";
+const processExists = typeof process != "undefined" && !process["browser"];
 const fakeFn = () => {};
 
 export type Instance = {
