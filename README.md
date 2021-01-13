@@ -50,7 +50,7 @@ scroll.add({
 // Alternative method with a directly integrated querySelectorAll
 scroll.addWithSelector('.title-2', {
   transform: function(i) {
-    i.el.style.color = '#' + Math.random * 100;
+    i.el.style.color = '#' + Math.round(Math.random() * 1000);
   }
 })
 
