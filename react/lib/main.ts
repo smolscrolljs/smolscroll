@@ -1,6 +1,25 @@
+import { Instance, smol } from "smolscroll";
 import { createElement, useEffect, useRef } from "react";
 
-export const Scroll = function ({
+export const useSmol = function (
+  mount = true,
+  options?: Parameters<typeof smol>[0]
+) {
+  const ref = useRef<Instance>();
+  if (!ref.current) {
+    ref.current = smol(options);
+  }
+
+  if (mount) {
+    useEffect(function () {
+      ref.current.mount();
+    }, []);
+  }
+
+  return ref.current;
+};
+
+export const SmolItem = function ({
   transform,
   children,
   smol,
