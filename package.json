@@ -1,7 +1,7 @@
 {
   "name": "smolscroll",
   "amdName": "smolscroll",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Tiny, flexible scroll listener with React support",
   "source": "lib/main.ts",
   "main": "dist/main.js",
