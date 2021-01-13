@@ -41,7 +41,7 @@ scroll.add({
 <span class="hljs-comment">// Alternative method with a directly integrated querySelectorAll</span>
 scroll.addWithSelector(<span class="hljs-string">'.title-2'</span>, {
   <span class="hljs-attr">transform</span>: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">i</span>) </span>{
-    i.el.style.color = <span class="hljs-string">'#'</span> + <span class="hljs-built_in">Math</span>.random * <span class="hljs-number">100</span>;
+    i.el.style.color = <span class="hljs-string">'#'</span> + <span class="hljs-built_in">Math</span>.round(<span class="hljs-built_in">Math</span>.random() * <span class="hljs-number">1000</span>);
   }
 })
 
@@ -50,6 +50,7 @@ scroll.mount();
 
 <span class="hljs-comment">// You can also register elements after the mount</span>
 scroll.add(...);</code></pre>
+<p><img src="assets/smolscroll.gif" class="img-fluid"></p>
 <h3 id="animations-element-position-and-size"><a href="#animations-element-position-and-size" aria-hidden="true"><span class="toc-link"><span class="icono-chain"></span></span></a>Animations, Element position and size</h3>
 <p>Animations usually are described with a time value "t" from 0-1. Usually this time is calculated based on the <strong>distance</strong> between the viewport y/x position and the element y/x position.</p>
 <p>As you transform your element while scrolling, this normally would break the time value as the transformations could have an effect on the <strong>distance</strong>.</p>
