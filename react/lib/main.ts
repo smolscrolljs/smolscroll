@@ -13,6 +13,8 @@ export const useSmol = function (
   if (mount) {
     useEffect(function () {
       ref.current.mount();
+
+      return ref.current.unmount;
     }, []);
   }
 
