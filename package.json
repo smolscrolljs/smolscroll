@@ -1,0 +1,96 @@
+{
+  "name": "smolscroll",
+  "amdName": "smolscroll",
+  "version": "0.0.1",
+  "description": "Tiny, flexible scroll listener with React support",
+  "source": "lib/main.ts",
+  "main": "dist/main.js",
+  "module": "dist/main.m.js",
+  "umd:main": "dist/main.umd.js",
+  "esmodule": "dist/main.modern.js",
+  "exports": {
+    ".": {
+      "browser": "./dist/main.m.js",
+      "umd": "./dist/main.umd.js",
+      "import": "./dist/main.m.js",
+      "require": "./dist/main.js"
+    },
+    "./react": {
+      "browser": "./react/dist/main.m.js",
+      "umd": "./react/dist/main.umd.js",
+      "import": "./react/dist/main.m.js",
+      "require": "./react/dist/main.js"
+    },
+    "./time": {
+      "browser": "./time/dist/main.m.js",
+      "umd": "./time/dist/main.umd.js",
+      "import": "./time/dist/main.m.js",
+      "require": "./time/dist/main.js"
+    },
+    "./package.json": "./package.json",
+    "./": "./"
+  },
+  "types": "dist/main.d.ts",
+  "authors": [
+    "Katja Lutz <mail@katjalutz.ch>"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/smolscrolljs/smolscroll.git"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "@types/chai": "^4.2.14",
+    "@types/fs-extra": "^9.0.6",
+    "@types/jest": "^26.0.20",
+    "@types/node": "^14.14.20",
+    "badgen": "^3.2.2",
+    "chai": "^4.2.0",
+    "d3-ease": "^2.0.0",
+    "fs-extra": "^9.0.1",
+    "gzip-size": "^6.0.0",
+    "jest": "^26.6.3",
+    "mallery": "1.0.0-alpha.7",
+    "microbundle": "^0.13.0",
+    "prettier": "^2.2.1",
+    "react": "^17.0.1",
+    "standard-version": "^9.1.0",
+    "ts-jest": "^26.4.4",
+    "typescript": "^4.1.3"
+  },
+  "files": [
+    "lib",
+    "dist",
+    "react/package.json",
+    "react/lib",
+    "react/dist",
+    "time/package.json",
+    "time/lib",
+    "time/dist"
+  ],
+  "standard-version": {
+    "scripts": {
+      "postchangelog": "node scripts/badges.js && node scripts/site.js && git add assets site README.md"
+    }
+  },
+  "jest": {
+    "preset": "ts-jest/presets/js-with-ts",
+    "coverageReporters": [
+      "json",
+      "lcov",
+      "text",
+      "clover",
+      "json-summary"
+    ],
+    "coveragePathIgnorePatterns": [
+      "main.(?:tsx|ts|jsx|js)",
+      "/lib/tpl-lib/",
+      "/node_modules/"
+    ],
+    "collectCoverageFrom": [
+      "lib/**/*.{ts,tsx,js,jsx}",
+      "react/lib/**/*.{ts,tsx,js,jsx}",
+      "time/lib/**/*.{ts,tsx,js,jsx}"
+    ]
+  }
+}

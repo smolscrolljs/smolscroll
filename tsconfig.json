@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "jsx": "react",
+    "noEmit": true,
+    "allowJs": true,
+    "baseUrl": "./node_modules",
+    "esModuleInterop": true,
+    "target": "ESNext",
+    "module": "commonjs",
+    "paths": {
+      "smolscroll": ["../lib/main.ts"],
+      "smolscroll/react": ["../react/lib/main.ts"],
+      "smolscroll/time": ["../time/lib/main.ts"]
+    }
+  },
+  "exclude": ["node_modules", "site", "**/dist"]
+}
