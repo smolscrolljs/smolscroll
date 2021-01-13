@@ -1,0 +1,133 @@
+<h1 id="smolscrll"><a href="#smolscrll" aria-hidden="true"><span class="toc-link"><span class="icono-chain"></span></span></a><a href="https://github.com/smolscrolljs/smolscroll" target="_blank">SmolScr🐶ll</a></h1>
+<p>Tiny, flexible scroll listener with React support</p>
+<h2 id="features"><a href="#features" aria-hidden="true"><span class="toc-link"><span class="icono-chain"></span></span></a>Features</h2>
+<ul>
+<li>🦻🏼 Sets up a passive scroll listener</li>
+<li>🪟 Accepts document &#x26; elements as scroll containers</li>
+<li>🔭 Iterates elements and only invokes transforms from those in the viewport</li>
+<li>👨‍👦 Handles browser resize events and updates the cached properties</li>
+<li>🗑 Passive garbage collection of removed elements</li>
+<li>⏲ Includes timing functions to calculate relative distances between the screen and the original element position</li>
+<li>📦 Caches original size and position of your elements</li>
+<li>🖌 Basic server side rendering support</li>
+</ul>
+<hr>
+<p><a href="https://opensource.org/licenses/MIT" target="_blank"><img src="assets/badge.license.svg" class="img-fluid"></a>
+<a href="https://www.npmjs.com/package/smolscroll" target="_blank"><img src="assets/badge.npm.svg" class="img-fluid"></a>
+<a href="https://prettier.io/" target="_blank"><img src="assets/badge.style.svg" class="img-fluid"></a>
+<br>
+<img src="assets/badge.core.size.svg" class="img-fluid">
+<img src="assets/badge.react.size.svg" class="img-fluid">
+<img src="assets/badge.time.size.svg" class="img-fluid"></p>
+<hr>
+<h2 id="core"><a href="#core" aria-hidden="true"><span class="toc-link"><span class="icono-chain"></span></span></a>Core</h2>
+<p>The core of the library is about registering scroll / resize event handlers, caching element sizes and positions and transforming elements in the viewport.</p>
+<p>Usage:</p>
+<pre><code class="hljs language-jsx"><span class="hljs-keyword">import</span> { smol } <span class="hljs-keyword">from</span> <span class="hljs-string">'smolscroll'</span>;
+
+<span class="hljs-keyword">const</span> scroll = smol();
+
+<span class="hljs-comment">// Register an element which should be cached and transformed</span>
+scroll.add({
+  <span class="hljs-attr">el</span>: <span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">'.title'</span>),
+  <span class="hljs-comment">// i = ScrollItem { el, width, height, x, y ... }</span>
+  <span class="hljs-comment">// s = Screen { width, height, x, y ... }</span>
+  <span class="hljs-attr">transform</span>: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">i, s</span>) </span>{
+    <span class="hljs-comment">// Use your creativity and create amazing effects</span>
+    i.el.style.opacity = <span class="hljs-built_in">Math</span>.random()
+  }
+});
+
+<span class="hljs-comment">// Alternative method with a directly integrated querySelectorAll</span>
+scroll.addWithSelector(<span class="hljs-string">'.title-2'</span>, {
+  <span class="hljs-attr">transform</span>: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">i</span>) </span>{
+    i.el.style.color = <span class="hljs-string">'#'</span> + <span class="hljs-built_in">Math</span>.random * <span class="hljs-number">100</span>;
+  }
+})
+
+<span class="hljs-comment">// Attach event listeners to the document</span>
+scroll.mount();
+
+<span class="hljs-comment">// You can also register elements after the mount</span>
+scroll.add(...);</code></pre>
+<h3 id="animations-element-position-and-size"><a href="#animations-element-position-and-size" aria-hidden="true"><span class="toc-link"><span class="icono-chain"></span></span></a>Animations, Element position and size</h3>
+<p>Animations usually are described with a time value "t" from 0-1. Usually this time is calculated based on the <strong>distance</strong> between the viewport y/x position and the element y/x position.</p>
+<p>As you transform your element while scrolling, this normally would break the time value as the transformations could have an effect on the <strong>distance</strong>.</p>
+<p>SmolScroll solves this with a "smol" wrapper element which will stay at the original position, with the original size. SmolScroll automatically wraps your element with a <code>&#x3C;div class="smol"></code>, unless the parent of your element already is an element with the class <code>smol</code>.</p>
+<p>The first argument <code>ScrollItem</code> of your transform function includes the memoized width/height/etc. values of the wrapper element <strong>and not your added one</strong>.</p>
+<p>When you create an animation effect you have to think about, if it could mess with the time calculation, basically you should only change css properties not having layout side-effects. Ideal css animation candidates are <code>transform</code> and <code>opacity</code>.</p>
+<h3 id="browser-support"><a href="#browser-support" aria-hidden="true"><span class="toc-link"><span class="icono-chain"></span></span></a>Browser support</h3>
+<p>At the moment the library was not yet explicitly tested on specific browsers, but it uses a couple modern browser features like:</p>
+<ul>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame" target="_blank">Window.requestAnimationFrame</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Node/isConnected" target="_blank">Node.isConnected</a></li>
+</ul>
+<h3 id="mounting-to-an-element-instead-of-the-document"><a href="#mounting-to-an-element-instead-of-the-document" aria-hidden="true"><span class="toc-link"><span class="icono-chain"></span></span></a>Mounting to an element instead of the document</h3>
+<pre><code class="hljs language-jsx">smol.mount(<span class="hljs-built_in">document</span>.querySelector(<span class="hljs-string">".custom-scroll-container"</span>));</code></pre>
+<p>Make sure your custom scroll container has <code>overflow: scroll</code>.</p>
+<h2 id="react-module"><a href="#react-module" aria-hidden="true"><span class="toc-link"><span class="icono-chain"></span></span></a>React module</h2>
+<p>Example:</p>
+<pre><code class="hljs language-jsx"><span class="hljs-keyword">import</span> { useSmol, SmolItem, useScrollMount } <span class="hljs-keyword">from</span> <span class="hljs-string">"smolscroll/react"</span>;
+
+<span class="hljs-keyword">const</span> transform = <span class="hljs-function">(<span class="hljs-params">i, s</span>) =></span> {
+  i.el.style.opacity = <span class="hljs-built_in">Math</span>.random();
+};
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> App = <span class="hljs-function"><span class="hljs-params">()</span> =></span> {
+  <span class="hljs-comment">// false is only needed if you use useScrollMount</span>
+  <span class="hljs-keyword">const</span> smol = useSmol(<span class="hljs-literal">false</span>);
+
+  <span class="hljs-comment">// Only needed if you want to mount smol to a virtual element</span>
+  <span class="hljs-keyword">const</span> containerRef = useScrollMount(smol);
+
+  <span class="hljs-keyword">return</span> (
+    <span class="xml"><span class="hljs-tag">&#x3C;<span class="hljs-name">div</span>
+      <span class="hljs-attr">style</span>=<span class="hljs-string">{{</span> <span class="hljs-attr">overflow:</span> "<span class="hljs-attr">scroll</span>", <span class="hljs-attr">width:</span> "<span class="hljs-attr">1100px</span>", <span class="hljs-attr">height:</span> "<span class="hljs-attr">500px</span>" }}
+      <span class="hljs-attr">ref</span>=<span class="hljs-string">{containerRef}</span>
+    ></span>
+      <span class="hljs-tag">&#x3C;<span class="hljs-name">SmolItem</span> <span class="hljs-attr">transform</span>=<span class="hljs-string">{transform}</span> <span class="hljs-attr">smol</span>=<span class="hljs-string">{smol}</span>></span>
+        <span class="hljs-tag">&#x3C;<span class="hljs-name">div</span> <span class="hljs-attr">style</span>=<span class="hljs-string">{{</span> <span class="hljs-attr">backgroundColor:</span> "<span class="hljs-attr">red</span>", <span class="hljs-attr">height:</span> "<span class="hljs-attr">1000px</span>" }} /></span>
+      <span class="hljs-tag">&#x3C;/<span class="hljs-name">SmolItem</span>></span>
+    <span class="hljs-tag">&#x3C;/<span class="hljs-name">div</span>></span>
+  );
+};</span></code></pre>
+<h2 id="time-module"><a href="#time-module" aria-hidden="true"><span class="toc-link"><span class="icono-chain"></span></span></a>Time module</h2>
+<p>SmolScroll includes a "time" module with several useful timing and easing related functions.</p>
+<p>It includes the easing functions from <a href="https://github.com/d3/d3-ease" target="_blank">d3-ease</a></p>
+<p>Example transform function:</p>
+<pre><code class="hljs language-jsx"><span class="hljs-keyword">import</span> { timeToCenterHalf } <span class="hljs-keyword">from</span> <span class="hljs-string">"smolscroll/time"</span>;
+
+<span class="hljs-keyword">const</span> transform = <span class="hljs-function">(<span class="hljs-params">i, s</span>) =></span> {
+  <span class="hljs-comment">// t is a value from 0.0 to 1.0</span>
+  <span class="hljs-keyword">const</span> t = timeToCenterHalf(<span class="hljs-literal">true</span>, i, s, -s.height / <span class="hljs-number">2</span>, s.height * <span class="hljs-number">2</span>);
+
+  i.el.style.transform = <span class="hljs-string">`translateX(<span class="hljs-subst">${t * <span class="hljs-number">500</span>}</span>px`</span>;
+};</code></pre>
+<p>Some of the included time functions:</p>
+<ul>
+<li>time</li>
+<li>timeToHalf</li>
+<li>timeToCenter</li>
+<li>timeToCenterHalf</li>
+</ul>
+<p>Time functions arguments:</p>
+<pre><code class="hljs language-jsx"><span class="hljs-keyword">const</span> transform = <span class="hljs-function">(<span class="hljs-params">i, s</span>) =></span> {
+  <span class="hljs-comment">// By default the distance will be calculated on the y axis.</span>
+  <span class="hljs-comment">// Set this to false, to calculate the x axis</span>
+  <span class="hljs-keyword">const</span> isYDistance = <span class="hljs-literal">true</span>;
+
+  <span class="hljs-comment">// Add an optional offset, basically resulting in the timing to start processing from 0 to 1 earlier or later</span>
+  <span class="hljs-comment">// This example makes it, so that the distance is calculated from the screen center, instead of the top screen edge</span>
+  <span class="hljs-keyword">const</span> offset = -s.height / <span class="hljs-number">2</span>;
+
+  <span class="hljs-comment">// Optional distance parameter (default: depending on the axis screen.width or screen.height)</span>
+  <span class="hljs-comment">// This defines how far the user has to scroll to get from t 0 to 1</span>
+  <span class="hljs-keyword">const</span> distance = <span class="hljs-number">400</span>;
+
+  <span class="hljs-keyword">const</span> t = time(isYDistance, i, s, offset, distance);
+};</code></pre>
+<h3 id="time-functions-visually-explained"><a href="#time-functions-visually-explained" aria-hidden="true"><span class="toc-link"><span class="icono-chain"></span></span></a>Time functions visually explained</h3>
+<p><img src="assets/time.svg" class="img-fluid"></p>
+<h2 id="server-side-rendering"><a href="#server-side-rendering" aria-hidden="true"><span class="toc-link"><span class="icono-chain"></span></span></a>Server side rendering</h2>
+<p>On the server, the functions of the core will literaly do nothing, so event listeners are not attached, no DOM related actions are triggered. Therefore you can prerender a scrollable component on the server, without worrying about DOM mutations.</p>
+<p>Obviously in this way, you have to make sure that your components are later hydrated on the client!</p>

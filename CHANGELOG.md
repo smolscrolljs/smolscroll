@@ -1,0 +1,11 @@
+# Changelog
+
+All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+
+### 0.0.2 (2021-01-13)
+
+
+### Features
+
+* **react:** implement useSmol, rename Scroll to SmolItem ([0538da8](https://github.com/smolscrolljs/smolscroll/commit/0538da8d51561cf287e56e4be79622cd988cffb6))
+* initial implementation ([98593c2](https://github.com/smolscrolljs/smolscroll/commit/98593c2c051db207a781368728a5a1d820aa946e))
