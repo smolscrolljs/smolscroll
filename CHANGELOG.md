@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.0.2](https://github.com/smolscrolljs/smolscroll/compare/v1.0.1...v1.0.2) (2021-01-13)
+
+
+### Bug Fixes
+
+* reset mounted during unmount ([31ee2c4](https://github.com/smolscrolljs/smolscroll/commit/31ee2c4259f4e0754acfde731b03b1cb81b9c5a2))
+
 ### [1.0.1](https://github.com/smolscrolljs/smolscroll/compare/v1.0.0...v1.0.1) (2021-01-13)
 
 
