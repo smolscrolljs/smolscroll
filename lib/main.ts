@@ -67,7 +67,7 @@ export type Instance = {
   scroll: () => void;
 };
 
-export const smolscroll = function ({
+export const smol = function ({
   ssr = processExists,
   beforeScroll,
   afterScroll,
@@ -280,13 +280,17 @@ export const smolscroll = function ({
 
   const addWithSelector: Instance["addWithSelector"] = function (
     selector,
-    config
+    config,
+    createOuterEl = true
   ) {
     for (const el of document.querySelectorAll<HTMLElement>(selector)) {
-      add({
-        ...config,
-        el,
-      });
+      add(
+        {
+          ...config,
+          el,
+        },
+        createOuterEl
+      );
     }
   };
 

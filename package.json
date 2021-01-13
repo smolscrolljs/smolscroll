@@ -1,7 +1,7 @@
 {
   "name": "smolscroll",
   "amdName": "smolscroll",
-  "version": "0.0.1",
+  "version": "0.0.0",
   "description": "Tiny, flexible scroll listener with React support",
   "source": "lib/main.ts",
   "main": "dist/main.js",
@@ -44,6 +44,7 @@
     "@types/fs-extra": "^9.0.6",
     "@types/jest": "^26.0.20",
     "@types/node": "^14.14.20",
+    "@types/react": "^17.0.0",
     "badgen": "^3.2.2",
     "chai": "^4.2.0",
     "d3-ease": "^2.0.0",
