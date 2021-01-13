@@ -61,6 +61,8 @@ scroll.mount();
 scroll.add(...);
 ```
 
+![](assets/smolscroll.gif)
+
 ### Animations, Element position and size
 
 Animations usually are described with a time value "t" from 0-1. Usually this time is calculated based on the **distance** between the viewport y/x position and the element y/x position.
