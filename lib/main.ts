@@ -296,6 +296,7 @@ export const smol = function ({
 
   const unmount: Instance["unmount"] = function () {
     rootItem = null;
+    mounted = false;
     container!.removeEventListener(
       "scroll",
       scroll,
