@@ -1,13 +1,20 @@
-let supportsPassive = false;
-try {
-  const opts = Object.defineProperty({}, "passive", {
-    get() {
-      supportsPassive = true;
-    },
-  });
-  (window as any).addEventListener("test", null, opts);
-  (window as any).removeEventListener("test", null, opts);
-} catch (e) {}
+const runtimeSupportsPassiveListeners = function () {
+  let passive = false;
+
+  try {
+    const opts = Object.defineProperty({}, "passive", {
+      get() {
+        passive = true;
+      },
+    });
+    (window as any).addEventListener("test", null, opts);
+    (window as any).removeEventListener("test", null, opts);
+  } catch (e) {}
+
+  return passive;
+};
+
+const supportsPassive = runtimeSupportsPassiveListeners();
 
 export type Screen = {
   x: number;
