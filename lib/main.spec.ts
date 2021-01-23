@@ -1,4 +1,5 @@
 import { assert } from "chai";
+import "./main";
 
 describe("main", () => {
   describe("add", () => {
