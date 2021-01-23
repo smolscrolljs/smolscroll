@@ -13,6 +13,8 @@ Tiny, flexible scroll listener with React support
 - 📦 Caches original size and position of your elements
 - 🖌 Basic server side rendering support
 
+**Give it a try**: [Codesandbox](https://codesandbox.io/s/musing-http-nzuvw?file=/src/App.js)
+
 ---
 
 [![](assets/badge.license.svg)](https://opensource.org/licenses/MIT)
