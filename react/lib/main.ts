@@ -25,7 +25,7 @@ export const SmolItem = function ({
   transform,
   children,
   smol,
-  ref,
+  ref = useRef<HTMLElement>(),
   tag = "div",
   className = "",
   ...rest
@@ -34,18 +34,16 @@ export const SmolItem = function ({
     console.error("Scroll only accepts one child!");
   }
 
-  const _ref = ref || useRef();
-
   useEffect(
     function () {
-      smol.add({ el: _ref.current.firstChild, transform }, false);
+      smol.add({ el: ref.current.firstChild, transform }, false);
     },
     [ref, transform]
   );
 
   return createElement(
     tag,
-    { ref: _ref, className: "smol " + className, ...rest },
+    { ref, className: "smol " + className, ...rest },
     children
   );
 };
