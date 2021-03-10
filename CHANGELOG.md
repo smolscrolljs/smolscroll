@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.1.0](https://github.com/smolscrolljs/smolscroll/compare/v1.0.3...v1.1.0) (2021-03-10)
+
+
+### Features
+
+* implement requestAnimationFrame cycle and better item caching ([f53cbe8](https://github.com/smolscrolljs/smolscroll/commit/f53cbe8cdd4abb019f96b467c292e22e541cb9a2))
+
+
+### Bug Fixes
+
+* **react:** add default type to SmolItem ref attr ([#2](https://github.com/smolscrolljs/smolscroll/issues/2)) ([05b22c0](https://github.com/smolscrolljs/smolscroll/commit/05b22c032f79ccdeed03ae8fee30cd652665a91d))
+
 ### [1.0.3](https://github.com/smolscrolljs/smolscroll/compare/v1.0.2...v1.0.3) (2021-01-23)
 
 ### [1.0.2](https://github.com/smolscrolljs/smolscroll/compare/v1.0.1...v1.0.2) (2021-01-13)
