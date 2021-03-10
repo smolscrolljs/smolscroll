@@ -38,7 +38,7 @@ type PublicItemConfig = {
 
 export type ScrollItem = PublicItemConfig & {
   prevItem: null | ScrollItem;
-  memoized: boolean;
+  cache?: number;
   outerEl: HTMLElement;
   width: number;
   height: number;
@@ -109,7 +109,7 @@ export const smol = function ({
   let halfViewWidthOffset = 0;
   let halfViewHeightOffset = 0;
 
-  let cache = true;
+  let cache = 0;
   let tick = false;
 
   const screen = {} as Screen;
@@ -148,11 +148,11 @@ export const smol = function ({
     item.xEnd = item.x + item.width;
     item.yEnd = item.y + item.height;
 
-    item.memoized = true;
+    item.cache = cache;
   };
 
   const transformItem = function (item: ScrollItem) {
-    if (!item.memoized || !cache) {
+    if (item.cache != cache) {
       memoItem(item);
     }
 
@@ -166,6 +166,15 @@ export const smol = function ({
   };
 
   const passiveScroll = function () {
+    if (!mounted) {
+      return;
+    }
+
+    if (!tick) {
+      requestAnimationFrame(passiveScroll);
+      return;
+    }
+
     if (beforeScroll) beforeScroll(screen);
 
     let nextItem = rootItem;
@@ -191,6 +200,7 @@ export const smol = function ({
     if (afterScroll) afterScroll(screen);
 
     tick = false;
+    requestAnimationFrame(passiveScroll);
   };
 
   const scroll = function () {
@@ -204,20 +214,13 @@ export const smol = function ({
     screen.viewY = screen.y - halfViewHeightOffset;
     screen.viewYEnd = screen.yEnd + halfViewHeightOffset;
 
-    if (tick) {
-      return;
-    }
-
     tick = true;
-    requestAnimationFrame(passiveScroll);
   };
 
   const resize = function () {
     memoContainer();
-    cache = false;
+    cache++;
     tick = true;
-    passiveScroll();
-    cache = true;
   };
 
   const lazyResize = debounce(resize, 300);
@@ -234,6 +237,8 @@ export const smol = function ({
       : container;
 
     memoContainer();
+
+    requestAnimationFrame(passiveScroll);
 
     scroll();
     container!.addEventListener(
@@ -265,7 +270,6 @@ export const smol = function ({
     }
 
     const item = {
-      memoized: false,
       prevItem: rootItem,
       outerEl: outerEl as HTMLElement,
       width: 0,
@@ -303,6 +307,7 @@ export const smol = function ({
 
   const unmount: Instance["unmount"] = function () {
     rootItem = null;
+    cache++;
     mounted = false;
     container!.removeEventListener(
       "scroll",
